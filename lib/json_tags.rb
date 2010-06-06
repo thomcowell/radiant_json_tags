@@ -13,7 +13,7 @@ module JsonTags
   tag "escape_json" do |tag|
     if tag.attr["key"]
       result = { tag.attr["key"] => tag.expand || "" }
-      result.to_json..gsub(/\{|\}/,"")
+      result.to_json.gsub(/\{|\}/,"")
     else 
       ""
     end
