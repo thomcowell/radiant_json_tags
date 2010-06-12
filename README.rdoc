@@ -1,0 +1,30 @@
+== JsonTags
+
+A Radiant (http://radiantcms.org) extension by Thomas Cowell (http://eightsquarestudio.com) that allows the transformation of radiant content into a json format.
+
+== Installation
+
+After the Radiant installation go into the directory it is installed in: 
+
+  cd /path/to/radiant
+
+Then install the JsonTags extension:
+
+  git clone git://github.com/hairballopolis/json_tags.git vendor/extensions/json_tags
+
+It should now just work
+
+== How to use this extension
+
+If you have a gallery and want to output as json
+Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','gallery34']
+<r:json_tags>
+<r:json_tags:key name="name">
+<r:gallery:each>
+<r:json_tags:array><r:gallery:name/></r:json_tags:array>
+</r:gallery:each>
+</r:json_tags:key>
+</r:json_tags>   
+
+The page would output
+{}
