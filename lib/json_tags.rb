@@ -110,7 +110,7 @@ module JsonTags
     <pre><code><r:json_tags:number>23</r:json_tags:number></code></pre>
     Safe way of adding numbers to json value 
   }
-  tag "json_tags:false" do |tag|
+  tag "json_tags:number" do |tag|
     tag.expand.to_f
   end
 end
