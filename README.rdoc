@@ -27,7 +27,22 @@ Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','galler
         </r:json_tags:array>
       </r:gallery:each>
     </r:json_tags:key>
+    <r:escape_json key="description">I'm a string that needs escaping.</r:escape_json>
+    <r:json_tags:key name="options">
+      <r:json_tags:object>
+        <r:json_tags:pair key="is_gallery"><r:json_tags:true/></r:json_tags:pair>
+        <r:json_tags:pair key="use_animation"><r:json_tags:false/></r:json_tags:pair>
+        <r:json_tags:pair key="extras"><r:json_tags:null/></r:json_tags:pair>
+      </r:json_tags:object>
+    </r:json_tags:pair>
   </r:json_tags>   
 
 The page would output
-{"name":["gallery1","gallery2","gallery3","gallery23","gallery34"]}
+{
+  "name":["gallery1","gallery2","gallery3","gallery23","gallery34"],
+  "description":"I\'m a string that needs escaping.",
+  "options" : {
+    "is_gallery" : true,
+    "use_animation" : false,
+    "extras : null
+}
