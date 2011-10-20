@@ -30,4 +30,4 @@ Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','galler
   </r:json_tags>   
 
 The page would output
-{}
+{"name":["gallery1","gallery2","gallery3","gallery23","gallery34"]}
