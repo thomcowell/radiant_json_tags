@@ -18,13 +18,16 @@ It should now just work
 
 If you have a gallery and want to output as json
 Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','gallery34']
-<r:json_tags>
-<r:json_tags:key name="name">
-<r:gallery:each>
-<r:json_tags:array><r:gallery:name/></r:json_tags:array>
-</r:gallery:each>
-</r:json_tags:key>
-</r:json_tags>   
+
+  <r:json_tags>
+    <r:json_tags:key name="name">
+      <r:gallery:each>
+        <r:json_tags:array>
+          <r:json_tags:array:item><r:gallery:name/></r:json_tags:array:item>
+        </r:json_tags:array>
+      </r:gallery:each>
+    </r:json_tags:key>
+  </r:json_tags>   
 
 The page would output
 {}
