@@ -32,7 +32,7 @@ module JsonTags
   
   desc %{
     Usage:
-    <pre><code><r:json_tags:pair key="keyName">Content / Value Here</r:json_tags:key></code></pre>
+    <pre><code><r:json_tags:pair key="keyName">Content / Value Here</r:json_tags:pair></code></pre>
     Adds key value pairs to the to_json object which is output in a json safe format  
   }
   tag "json_tags:pair" do |tag|
