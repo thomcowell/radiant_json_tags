@@ -20,15 +20,15 @@ If you have a gallery and want to output as json
 Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','gallery34']
 
   <r:json_tags>
-    <r:json_tags:key name="name">
-      <r:gallery:each>
-        <r:json_tags:array>
+    <r:json_tags:pair name="name">
+      <r:json_tags:array>
+        <r:gallery:each>
           <r:json_tags:array:item><r:gallery:name/></r:json_tags:array:item>
-        </r:json_tags:array>
-      </r:gallery:each>
-    </r:json_tags:key>
+        </r:gallery:each>
+      </r:json_tags:array>
+    </r:json_tags:pair>
     <r:escape_json key="description">I'm a string that needs escaping.</r:escape_json>
-    <r:json_tags:key name="options">
+    <r:json_tags:pair name="options">
       <r:json_tags:object>
         <r:json_tags:pair key="is_gallery"><r:json_tags:true/></r:json_tags:pair>
         <r:json_tags:pair key="use_animation"><r:json_tags:false/></r:json_tags:pair>
