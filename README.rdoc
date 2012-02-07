@@ -20,26 +20,39 @@ If you have a gallery and want to output as json
 Given you have 5 galleries ['gallery1','gallery2','gallery3','gallery23','gallery34']
 
   <r:json_tags>
-    <r:json_tags:pair name="name">
-      <r:json_tags:array>
-        <r:gallery:each>
-          <r:json_tags:array:item><r:gallery:name/></r:json_tags:array:item>
-        </r:gallery:each>
-      </r:json_tags:array>
-    </r:json_tags:pair>
-    <r:escape_json key="description">I'm a string that needs escaping.</r:escape_json>
-    <r:json_tags:pair name="options">
-      <r:json_tags:object>
-        <r:json_tags:pair key="is_gallery"><r:json_tags:true/></r:json_tags:pair>
-        <r:json_tags:pair key="use_animation"><r:json_tags:false/></r:json_tags:pair>
-        <r:json_tags:pair key="extras"><r:json_tags:null/></r:json_tags:pair>
-      </r:json_tags:object>
-    </r:json_tags:pair>
+    <r:json_tags:array key="name">
+      <r:gallery:each>
+        <r:json_tags:array_item><r:gallery:name/></r:json_tags:array_item>
+      </r:gallery:each>
+    </r:json_tags:array>
+    <r:json_tags:array key="settings">
+    <r:gallery:each>
+        <r:json_tags:array_item>
+          <r:json_tags:object>
+            <r:json_tags:pair key="is_gallery"><r:json_tags:true/></r:json_tags:pair>
+            <r:json_tags:pair key="name"><r:gallery:name/></r:json_tags:pair>
+          </r:json_tags:object>
+        </r:json_tags:array_item>
+      </r:gallery:each>
+    </r:json_tags:array>
+    <r:json_tags:pair key="description">I'm a string that needs escaping.</r:json_tags:pair>
+    <r:json_tags:object name="options">
+      <r:json_tags:pair key="is_gallery"><r:json_tags:true/></r:json_tags:pair>
+      <r:json_tags:pair key="use_animation"><r:json_tags:false/></r:json_tags:pair>
+      <r:json_tags:pair key="extras"><r:json_tags:null/></r:json_tags:pair>
+    </r:json_tags:object>
   </r:json_tags>   
 
 The page would output
   {
     "name":["gallery1","gallery2","gallery3","gallery23","gallery34"],
+    "settings":[
+      {"name":"gallery1","is_gallery" : true},
+      {"name":"gallery2","is_gallery" : true},
+      {"name":"gallery3","is_gallery" : true},
+      {"name":"gallery23","is_gallery" : true},
+      {"name":"gallery34","is_gallery" : true}
+    ]
     "description":"I\'m a string that needs escaping.",
     "options" : {
       "is_gallery" : true,
