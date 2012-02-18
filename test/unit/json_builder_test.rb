@@ -63,9 +63,10 @@ class JsonBuilderTest < Test::Unit::TestCase
 		@json_builder << true
 		@json_builder.key "sam"
 		@json_builder << nil
+		@json_builder.close
 		@json_builder.key "nam"
 		@json_builder << 1
-		assert_equal ({:bob => {:bob => "loblaw",:ham => false,:jam => true, :sam => nil,:nam => 1}}.to_json), @json_builder.to_json
+		assert_equal ({:bob => {:bob => "loblaw",:ham => false,:jam => true, :sam => nil},:nam => 1}.to_json), @json_builder.to_json
 	end
 
 	def test_nested_array
