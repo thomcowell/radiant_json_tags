@@ -1,5 +1,7 @@
+require File.dirname(__FILE__) + "/json_builder"
+
 module JsonTags
-  #tags available globally   
+  #tags available globally
   include Radiant::Taggable
 
   class JsonTagError < StandardError; end
@@ -10,7 +12,7 @@ module JsonTags
     Escapes the contents inbetween into a json safe format from the content added inside
   }
   tag "json_tags" do |tag|
-    tag.locals.json_tags ||= {}
+    tag.locals.json_tags ||= JsonBuilder.new
     tag.expand
     tag.locals.json_tags.to_json if tag.nesting == "content:json_tags"
   end
@@ -22,12 +24,10 @@ module JsonTags
   }
   tag "json_tags:pair" do |tag|
     if tag.attr["key"]
-      results = tag.expand
-      tag.locals.json_tags[ tag.attr["key"] ] = (@force ? @results : (@results || results || ""))
-      @results = nil
-      @force = false
+      tag.locals.json_tags.key tag.attr["key"]
+      content = tag.expand
+      tag.locals.json_tags << content unless content.blank?
     end
-    ""
   end
 
   desc %{
@@ -36,16 +36,9 @@ module JsonTags
     Adds object to json value, attribute key is optional
   }
   tag "json_tags:object" do |tag|
-	  original = tag.locals.json_tags
-	  tag.locals.json_tags = {}
+	  tag.locals.json_tags.object tag.attr["key"]
 	  tag.expand
-    if tag.attr["key"]
-      original[ tag.attr["key"] ] = tag.locals.json_tags
-    else
-       @results = tag.locals.json_tags
-    end
-    tag.locals.json_tags = original
-    ""
+    tag.locals.json_tags.close
   end
 
   desc %{
@@ -54,14 +47,9 @@ module JsonTags
     Adds array to json value
   }
   tag "json_tags:array" do |tag|
-    if tag.attr["key"]
-      original = tag.locals.json_tags_array
-      tag.locals.json_tags_array = []
-      tag.expand
-      tag.locals.json_tags[ tag.attr["key"] ] = tag.locals.json_tags_array
-      tag.locals.json_tags_array = original
-    end
-    ""
+    tag.locals.json_tags.array tag.attr["key"]
+    tag.expand
+    tag.locals.json_tags.close
   end
 
   desc %{
@@ -70,13 +58,8 @@ module JsonTags
     Pushes the value onto the json array, must be nested inside json_tags:array
   }
   tag "json_tags:array_item" do |tag|
-    if tag.locals.json_tags_array.is_a? Array
-      results = tag.expand
-      tag.locals.json_tags_array << (@force ? @results : ( @results || results ))
-      @results = nil
-      @force = false
-    end
-    ""
+    content = tag.expand
+    tag.locals.json_tags << content unless content.blank?
   end
 
   desc %{
@@ -85,8 +68,7 @@ module JsonTags
     Safe way of adding null json value
   }
   tag "json_tags:null" do |tag|
-    @force = true
-    @results = nil
+    tag.locals.json_tags << nil
   end
 
   desc %{
@@ -95,8 +77,7 @@ module JsonTags
     Safe way of adding true json value
   }
   tag "json_tags:true" do |tag|
-    @force = true
-    @results = true
+    tag.locals.json_tags << true
   end
 
   desc %{
@@ -105,8 +86,7 @@ module JsonTags
     Safe way of adding false json value
   }
   tag "json_tags:false" do |tag|
-    @force = true
-    @results = false
+    tag.locals.json_tags << false
   end
 
   desc %{
@@ -115,7 +95,6 @@ module JsonTags
     Safe way of adding numbers to json value
   }
   tag "json_tags:number" do |tag|
-    @force = true
-    @results = tag.expand.to_f
+    tag.locals.json_tags << tag.expand.to_f
   end
 end
