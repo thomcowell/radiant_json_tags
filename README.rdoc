@@ -10,7 +10,7 @@ After the Radiant installation go into the directory it is installed in:
 
 Then install the JsonTags extension:
 
-  git clone git://github.com/hairballopolis/json_tags.git vendor/extensions/json_tags
+  git clone git://github.com/hairballopolis/radiant_json_tags.git vendor/extensions/json_tags
 
 It should now just work
 
